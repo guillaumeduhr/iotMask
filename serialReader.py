@@ -1,13 +1,13 @@
-from datetime import datetime
+# from datetime import datetime
 # import serial
 # import time
 import sqlite3
 
 con = sqlite3.connect('example.db')
 cur = con.cursor()
-# cur.execute("create table test (date, mask)")
+cur.execute("create table test (date, mask)")
 
-cur.execute("insert into test values (?, ?)", (datetime.now(), False))
+# cur.execute("insert into test values (?, ?)", (datetime.now(), False))
 
 con.commit()
 con.close()
