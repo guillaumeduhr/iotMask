@@ -11,17 +11,19 @@ client.create_database('maskamera')
 client.switch_database('maskamera')
 
 while True:
+    maskOn = 0 if random.randint(0, 3) == 0 else 1
     json_body = [
         {
             "measurement": "maskCheck",
             "time": datetime.now().isoformat(),
             "fields": {
-                "mask": 0 if random.randint(0, 5) == 0 else 1
+                "mask": maskOn
             }
         }
     ]
     client.write_points(json_body)
-    print("Added new measurement at " + datetime.now().isoformat())
+    print("Added new measurement at " +
+          datetime.now().isoformat() + " with value: " + str(maskOn))
     time.sleep(random.randint(1, 5))
 
 # con = sqlite3.connect('example.db')
