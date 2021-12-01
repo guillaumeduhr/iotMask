@@ -7,7 +7,7 @@ cur = con.cursor()
 
 while True:
     cur.execute("insert into test values (?, ?)",
-                (datetime.now().isoformat(), True))
+                (datetime.now().timestamp(), True))
     con.commit()
     time.sleep(.5)
 
