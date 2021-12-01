@@ -1,14 +1,34 @@
 import time
-import sqlite3
+# import sqlite3
 from datetime import datetime
+from influxdb import InfluxDBClient
 
-con = sqlite3.connect('example.db')
-cur = con.cursor()
+
+client = InfluxDBClient(host='localhost', port=8086)
+client.drop_database('maskamera')
+client.create_database('maskamera')
+client.switch_database('maskamera')
 
 while True:
-    cur.execute("insert into test values (?, ?)",
-                (datetime.now().timestamp(), True))
-    con.commit()
+    json_body = [
+        {
+            "measurement": "maskCheck",
+            "time": datetime.now().isoformat(),
+            "fields": {
+                "mask": 1
+            }
+        }
+    ]
+    client.write_points(json_body)
     time.sleep(.5)
 
-con.close()
+# con = sqlite3.connect('example.db')
+# cur = con.cursor()
+
+# while True:
+#     cur.execute("insert into test values (?, ?)",
+#                 (datetime.now().timestamp(), True))
+#     con.commit()
+#     time.sleep(.5)
+
+# con.close()
