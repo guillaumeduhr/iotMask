@@ -1,26 +1,16 @@
-# from datetime import datetime
-# import serial
-# import time
-import sqlite3
+import serial
+import time
 
-con = sqlite3.connect('example.db')
-cur = con.cursor()
-cur.execute("create table test (date, mask)")
+ser = serial.Serial(port='/dev/ttyACM1', baudrate=115200)
 
-# cur.execute("insert into test values (?, ?)", (datetime.now(), False))
+while (True):
 
-con.commit()
-con.close()
-# ser = serial.Serial(port='/dev/ttyACM1', baudrate=115200)
+    reading = ser.readline().decode()
 
-# while (True):
+    if reading.startswith('...'):
+        # print('Message recu: ' + reading)
+        reading = reading[3:len(reading)-2]
+        readingArr = reading.split(";")
+        print(readingArr)
 
-#     reading = ser.readline().decode()
-
-#     if reading.startswith('...'):
-#         # print('Message recu: ' + reading)
-#         reading = reading[3:len(reading)-2]
-#         readingArr = reading.split(";")
-#         print(readingArr)
-
-#     time.sleep(0.01)
+    time.sleep(0.01)
